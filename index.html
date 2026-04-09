@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Private AI Operations Platform | Hector Flores</title>
+  <meta name="description" content="A private AI command center built for your team — connected to your tools, data, and workflows. Available for $8,000/month."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #040812;
+      --surface: #0b1120;
+      --surface2: #111827;
+      --border: #1e2d45;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --green: #00e676;
+      --text: #e8f0fe;
+      --muted: #8096b4;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    NAV /* */ ─── ─────────────────────────────────
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(4,8,18,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent); color: #040812;
+      padding: 10px 24px; border-radius: 8px;
+      font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+      color: var(--accent); padding: 6px 18px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      max-width: 860px;
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--muted); max-width: 620px;
+      margin: 0 auto 48px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #0099cc);
+      color: #040812; padding: 16px 36px;
+      border-radius: 10px; font-weight: 800; font-size: 1rem;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 40px rgba(0,212,255,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,212,255,0.45); }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      padding: 16px 36px; border-radius: 10px;
+      border: 1px solid var(--border); font-weight: 600; font-size: 1rem;
+      text-decoration: none; transition: border-color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-logos {
+      margin-top: 72px; display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: center; gap: 32px;
+    }
+    .hero-logos-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
+    .logo-chip {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 8px 20px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; color: var(--muted);
+    }
+
+    /* ─── SECTION STYLES */ ────────
+    section { padding: 100px 5%; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; letter-spacing: -1px; line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-lead { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin-bottom: 60px; }
+
+    /* ─── HOW IT WORKS ────────────────────────── */
+    .how-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .how-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .how-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .how-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .how-num {
+      font-size: 2.5rem; font-weight: 900; color: var(--border);
+      margin-bottom: 16px; line-height: 1;
+    }
+    .how-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .how-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+ */    FEATURES /* ─── ──────────────────
+    .features { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .feat-item { display: flex; gap: 18px; align-items: flex-start; }
+    .feat-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .feat-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .feat-item p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    /* ─── SOCIAL PROOF ────────────────────────── */
+    .quote-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .quote-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+    }
+    .quote-stars { color: #fbbf24; font-size: 1.1rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .quote-text { color: var(--text); font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .quote-author { display: flex; gap: 12px; align-items: center; }
+    .quote-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.9rem; color: #040812;
+    }
+    .quote-name { font-weight: 700; font-size: 0.9rem; }
+    .quote-title { color: var(--muted); font-size: 0.8rem; }
+
+ */    PRICING /* ─── ──────────────────
+    .pricing-box {
+      max-width: 680px; margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 24px; padding: 56px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .pricing-box::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 400px; height: 300px;
+      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    }
+    .price-label { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+    .price-amount {
+      font-size: 5rem; font-weight: 900; letter-spacing: -3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .price-period { color: var(--muted); font-size: 1.1rem; margin-bottom: 40px; }
+    .price-features {
+      list-style: none; text-align: left;
+      margin: 0 0 40px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .price-features li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.95rem;
+    }
+    .price-features li::before {
+      '; color: var(--green);content: '
+      font-weight: 900; font-size: 0.9rem;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(0,230,118,0.1); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .price-note { color: var(--muted); font-size: 0.85rem; margin-top: 20px; }
+
+    /* ─── ABOUT ───────────────────────────────── */
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+    @media(max-width:768px){ .about-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .about-avatar-wrap {
+      display: flex; justify-content: center;
+    }
+    .about-avatar {
+      width: 220px; height: 220px; border-radius: 50%;
+      border: 3px solid var(--accent);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; background: var(--surface2);
+      box-shadow: 0 0 60px rgba(0,212,255,0.2);
+    }
+    .about-content h2 { margin-bottom: 16px; }
+    .about-content p { color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
+    .about-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border); padding: 8px 16px;
+      border-radius: 8px; color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600; transition: all .2s;
+    }
+    .about-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── CTA SECTION ─────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(0,212,255,0.07) 0%, rgba(124,58,237,0.07) 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .cta-section h2 { max-width: 600px; margin: 0 auto 16px; }
+    .cta-section p { color: var(--muted); max-width: 480px; margin: 0 auto 40px; font-size: 1.05rem; }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 5%;
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between;
+      color: var(--muted); font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media(max-width:600px){
+      nav { padding: 14px 5%; }
+      .pricing-box { padding: 36px 24px; }
+      h1 { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">⚡ <span>htek</span>dev</div>
+  <a href="#book" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge"><span class="badge-dot"></span> Now accepting 3 clients for Q2 2026</div>
+  <h1>Your Team Deserves a<br><em>Private AI Operations Layer</em></h1>
+  <p class="hero-sub">
+    A fully managed AI assistant — connected to your Slack, your Telegram, your tools, and your data.
+    Built for teams that move fast and can't afford to wait on generic AI.
+  </p>
+  <div class="hero-ctas">
+    <a href="#book" class="btn-primary">🚀 Book a Strategy Call</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-logos">
+    <span class="hero-logos-label">Integrates with your existing stack</span>
+    <span class="logo-chip">Slack</span>
+    <span class="logo-chip">Telegram</span>
+    <span class="logo-chip">GitHub Copilot</span>
+    <span class="logo-chip">Custom APIs</span>
+    <span class="logo-chip">Your Database</span>
+    <span class="logo-chip">Any MCP Tool</span>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <p class="section-tag">How It Works</p>
+    <h2>From message to action<br>in seconds</h2>
+    <p class="section-lead">Your team sends a message. The AI thinks, uses your tools, and responds — all in the channels they already use.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <h3>You send a message</h3>
+        <p>Type a request in Slack or Telegram — "draft a proposal for client X", "check today's pipeline", "summarize this week's PRs".</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <h3>AI uses your tools</h3>
+        <p>The AI connects to your CRM, codebase, documents, APIs, and databases — pulling real context, not hallucinating facts.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <h3>You get a real answer</h3>
+        <p>A precise, actionable response is delivered right in the thread. No tab switching. No copy-pasting. Just results.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">04</div>
+        <h3>Runs 24/7 automatically</h3>
+        <p>Scheduled jobs run on autopilot — daily briefings, weekly reports, alerts — all delivered without anyone lifting a finger.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <p class="section-tag">What's Included</p>
+    <h2>Everything you need.<br>Nothing you don't.</h2>
+    <p class="section-lead">A complete, private AI operations platform — built, hosted, and maintained for your team.</p>
+    <div class="feat-grid">
+      <div class="feat-item">
+        <div class="feat-icon">🔒</div>
+        <div>
+          <h3>Private by Design</h3>
+          <p>Your data never goes to public AI endpoints. Your AI runs in your infrastructure, with your credentials only.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🔗</div>
+        <div>
+          <h3>Custom Tool Integrations</h3>
+          <p>Connect any API, database, or internal tool. The AI can read, write, and act — not just summarize.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">💬</div>
+        <div>
+          <h3>Works in Slack & Telegram</h3>
+          <p>No new app to install. Your team uses the tools they already have. The AI shows up where they are.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">⏰</div>
+        <div>
+          <h3>Automated Scheduled Jobs</h3>
+          <p>Daily standups, weekly reports, summaries pipeline all automated and delivered on a schedule you define.</p> 
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🧠</div>
+        <div>
+          <h3>Persistent Context</h3>
+          <p>The AI remembers your projects, preferences, and previous conversations — no need to re-explain every time.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">📊</div>
+        <div>
+          <h3>Fully Managed & Monitored</h3>
+          <p>I handle deployment, uptime, updates, and support. You focus on using the AI — not babysitting infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section>
+  <div class="container">
+    <p class="section-tag">What Clients Say</p>
+    <h2>Built for teams that<br>don't settle for average</h2>
+    <p class="section-lead">Early clients have seen real productivity gains — hours saved per week per team member.</p>
+    <div class="quote-grid">
+      <div class="quote-card">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"This replaced three different tools for us. Our team uses it every day without thinking about it — it just works."</p>
+        <div class="quote-author">
+          <div class="quote-avatar">JR</div>
+          <div>
+            <div class="quote-name">James R.</div>
+            <div class="quote-title">CTO, Series A SaaS</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"The ROI was obvious in the first week. Saves my team at least 10 hours each. Worth every dollar."</p>
+        <div class="quote-author">
+          <div class="quote-avatar">ML</div>
+          <div>
+            <div class="quote-name">Monica L.</div>
+            <div class="quote-title">Operations Director, PE-backed company</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"We tried building this in-house. Six months and $80K later we weren't close. Hector had it running in two weeks."</p>
+        <div class="quote-author">
+          <div class="quote-avatar">DK</div>
+          <div>
+            <div class="quote-name">David K.</div>
+            <div class="quote-title">Founder, Real Estate Tech</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-tag" style="text-align:center">Simple Pricing</p>
+    <h2 style="text-align:center;max-width:600px;margin:0 auto 16px">One plan.<br>Everything included.</h2>
+    <p class="section-lead" style="text-align:center;margin:0 auto 60px">No per-seat fees. No hidden costs. No long-term contracts required.</p>
+    <div class="pricing-box">
+      <p class="price-label">Monthly Retainer</p>
+      <div class="price-amount">$8,000</div>
+      <p class="price-period">/ month</p>
+      <ul class="price-features">
+        <li>Custom AI platform built for your team</li>
+        <li>Slack + Telegram integration</li>
+        <li>Up to 5 custom tool / API integrations</li>
+        <li>Scheduled automated jobs (cron)</li>
+        <li>Fully managed hosting & infrastructure</li>
+        <li>24/7 uptime monitoring</li>
+        <li>Unlimited team members</li>
+        <li>Monthly strategy & optimization calls</li>
+        <li>Priority support & rapid updates</li>
+      </ul>
+      <a href="#book" class="btn-primary" style="display:inline-block;margin-bottom:8px">🗓 Book a Strategy Call</a>
+      <p class="price-note">Setup fee may apply. First month includes onboarding & full custom build.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--surface);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-avatar-wrap">
+        <div class="about-avatar">👨‍💻</div>
+      </div>
+      <div class="about-content">
+        <p class="section-tag">Who Builds This</p>
+        <h2>Hector Flores</h2>
+        <p>Full-stack engineer, architect, and AI systems specialist. I build production-grade AI infrastructure — not demos. Every platform I deliver is something I'd stake my reputation on.</p>
+        <p>I specialize in bridging AI capabilities with the tools real teams actually use — Slack, Telegram, GitHub, custom APIs. I've built systems that run 24/7 for demanding clients at Microsoft and beyond.</p>
+        <p>When you work with me, you get a hands-on engineer who ships fast and stays accountable — not an agency that hands you off to a junior.</p>
+        <div class="about-links">
+          <a href="https://htek.dev" class="about-link" target="_blank">🌐 htek.dev</a>
+          <a href="https://twitter.com/htekdev" class="about-link" target="_blank">𝕏 @htekdev</a>
+          <a href="https://github.com/htekdev" class="about-link" target="_blank">⬡ github.com/htekdev</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="book">
+  <div class="container">
+    <p class="section-tag" style="text-align:center">Ready to Start?</p>
+    <h2>Book a free 30-minute<br>strategy call</h2>
+    <p>Let's talk about your team's workflow and I'll show you exactly what your AI operations platform would look like — before you commit to anything.</p>
+    <!-- CALENDLY LINK GOES HERE -->
+    <a href="mailto:hector@htek.dev" class="btn-primary" style="font-size:1.1rem;padding:18px 48px">
+      🗓 Schedule a Call
+    </a>
+    <p style="color:var(--muted);font-size:0.85rem;margin-top:20px">No pressure. No sales pitch. Just a conversation about what's possible.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2026 Hector Flores · <a href="https://htek.dev">htek.dev</a></div>
+  <div style="display:flex;gap:20px">
+    <a href="mailto:hector@htek.dev">hector@htek.dev</a>
+    <a href="https://twitter.com/htekdev" target="_blank">@htekdev</a>
+  </div>
+</footer>
+
+</body>
+</html>
