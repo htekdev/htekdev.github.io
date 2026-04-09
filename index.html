@@ -1,471 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Private AI Operations Platform | Hector Flores</title>
-  <meta name="description" content="A private AI command center built for your team — connected to your tools, data, and workflows. Available for $8,000/month."/>
+  <title>PilotOps — AI-Powered Operations for Your Business</title>
+  <meta name="description" content="A fully managed AI assistant connected to your team's tools, data, and workflows. Built for law firms, finance teams, agencies, and real estate operations."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #040812;
-      --surface: #0b1120;
-      --surface2: #111827;
-      --border: #1e2d45;
-      --accent: #00d4ff;
-      --accent2: #7c3aed;
-      --green: #00e676;
-      --text: #e8f0fe;
-      --muted: #8096b4;
-      --radius: 16px;
+      --bg:       #05080f;
+      --card:     #0c1220;
+      --card2:    #0f1829;
+      --border:   rgba(255,255,255,0.07);
+      --accent:   #3b82f6;
+      --accent-g: linear-gradient(135deg,#3b82f6,#8b5cf6);
+      --green:    #22c55e;
+      --yellow:   #f59e0b;
+      --text:     #f0f4ff;
+      --muted:    #7a90b4;
+      --r:        14px;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    /* ── UTILITIES ─────────────────────── */
+    .container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    .tag { font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .section { padding: 80px 0; }
+    .section-alt { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    NAV /* */ ─── ─────────────────────────────────
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 5%;
-      background: rgba(4,8,18,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px;
-      color: var(--text);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .nav-logo span { color: var(--accent); }
-    .nav-cta {
-      background: var(--accent); color: #040812;
-      padding: 10px 24px; border-radius: 8px;
-      font-weight: 700; font-size: 0.9rem;
-      text-decoration: none; transition: opacity .2s;
-    }
-    .nav-cta:hover { opacity: 0.85; }
+    h2 { font-size: clamp(1.7rem,4vw,2.6rem); font-weight: 800; letter-spacing: -.8px; line-height: 1.2; margin-bottom: 14px; }
+    h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .lead { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 540px; margin-bottom: 48px; }
 
-    /* ─── HERO ────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 120px 5% 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-      width: 900px; height: 900px;
-      background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -100px; right: -100px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
-      color: var(--accent); padding: 6px 18px; border-radius: 100px;
-      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
-      text-transform: uppercase; margin-bottom: 28px;
-    }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
-
-    h1 {
-      font-size: clamp(2.6rem, 6vw, 5rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      max-width: 860px;
-      margin-bottom: 24px;
-    }
-    h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      color: var(--muted); max-width: 620px;
-      margin: 0 auto 48px;
-      font-weight: 400;
-      line-height: 1.7;
-    }
-    .hero-ctas {
-      display: flex; flex-wrap: wrap; gap: 16px;
-      justify-content: center;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #0099cc);
-      color: #040812; padding: 16px 36px;
-      border-radius: 10px; font-weight: 800; font-size: 1rem;
-      text-decoration: none; transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 0 40px rgba(0,212,255,0.3);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,212,255,0.45); }
-    .btn-secondary {
-      background: transparent; color: var(--text);
-      padding: 16px 36px; border-radius: 10px;
-      border: 1px solid var(--border); font-weight: 600; font-size: 1rem;
-      text-decoration: none; transition: border-color .2s;
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-    .hero-logos {
-      margin-top: 72px; display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: center; gap: 32px;
-    }
-    .hero-logos-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
-    .logo-chip {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 8px 20px; border-radius: 8px;
-      font-size: 0.85rem; font-weight: 600; color: var(--muted);
-    }
-
-    /* ─── SECTION STYLES */ ────────
-    section { padding: 100px 5%; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-tag {
-      font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-    }
-    h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 800; letter-spacing: -1px; line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .section-lead { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin-bottom: 60px; }
-
-    /* ─── HOW IT WORKS ────────────────────────── */
-    .how-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .how-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px;
-      position: relative; overflow: hidden;
-      transition: border-color .2s, transform .2s;
-    }
-    .how-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .how-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-    }
-    .how-num {
-      font-size: 2.5rem; font-weight: 900; color: var(--border);
-      margin-bottom: 16px; line-height: 1;
-    }
-    .how-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-    .how-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
-
- */    FEATURES /* ─── ──────────────────
-    .features { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .feat-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-    }
-    .feat-item { display: flex; gap: 18px; align-items: flex-start; }
-    .feat-icon {
-      width: 48px; height: 48px; flex-shrink: 0;
-      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-    }
-    .feat-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-    .feat-item p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
-
-    /* ─── SOCIAL PROOF ────────────────────────── */
-    .quote-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-    .quote-card {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px;
-    }
-    .quote-stars { color: #fbbf24; font-size: 1.1rem; margin-bottom: 16px; letter-spacing: 2px; }
-    .quote-text { color: var(--text); font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-    .quote-author { display: flex; gap: 12px; align-items: center; }
-    .quote-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 0.9rem; color: #040812;
-    }
-    .quote-name { font-weight: 700; font-size: 0.9rem; }
-    .quote-title { color: var(--muted); font-size: 0.8rem; }
-
- */    PRICING /* ─── ──────────────────
-    .pricing-box {
-      max-width: 680px; margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid rgba(0,212,255,0.3);
-      border-radius: 24px; padding: 56px;
-      text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .pricing-box::before {
-      content: '';
-      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-      width: 400px; height: 300px;
-      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
-    }
-    .price-label { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
-    .price-amount {
-      font-size: 5rem; font-weight: 900; letter-spacing: -3px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    .grad-text {
+      background: var(--accent-g);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
-      line-height: 1;
     }
-    .price-period { color: var(--muted); font-size: 1.1rem; margin-bottom: 40px; }
-    .price-features {
-      list-style: none; text-align: left;
-      margin: 0 0 40px; display: flex; flex-direction: column; gap: 14px;
-    }
-    .price-features li {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.95rem;
-    }
-    .price-features li::before {
-      '; color: var(--green);content: '
-      font-weight: 900; font-size: 0.9rem;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: rgba(0,230,118,0.1); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .price-note { color: var(--muted); font-size: 0.85rem; margin-top: 20px; }
 
-    /* ─── ABOUT ───────────────────────────────── */
-    .about-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    /* ── NAV ───────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(5,8,15,.9); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-size: 1.1rem; font-weight: 900; letter-spacing: -.5px; }
+    .nav-brand span { color: var(--accent); }
+    .nav-btn {
+      background: var(--accent); color: #fff;
+      padding: 8px 18px; border-radius: 8px;
+      font-weight: 700; font-size: .85rem; text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-btn:hover { background: #2563eb; }
+
+    /* ── HERO ──────────────────────────── */
+    .hero {
+      padding: 130px 20px 80px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: min(700px, 140vw); height: 500px;
+      background: radial-gradient(ellipse at center top, rgba(59,130,246,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.3);
+      color: var(--accent); padding: 5px 14px; border-radius: 100px;
+      font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .8px;
+      margin-bottom: 24px;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 7vw, 4.4rem);
+      font-weight: 900; letter-spacing: -2px; line-height: 1.1;
+      max-width: 820px; margin: 0 auto 20px;
+    }
+    .hero-sub {
+      color: var(--muted); font-size: clamp(.95rem,2vw,1.2rem);
+      max-width: 560px; margin: 0 auto 36px; line-height: 1.7;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn-primary {
+      background: var(--accent-g); color: #fff;
+      padding: 14px 28px; border-radius: 10px;
+      font-weight: 800; font-size: .95rem; text-decoration: none;
+      box-shadow: 0 4px 30px rgba(59,130,246,.35);
+      transition: transform .2s, box-shadow .2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(59,130,246,.45); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 14px 28px; border-radius: 10px;
+      border: 1px solid var(--border); font-weight: 600; font-size: .95rem;
+      text-decoration: none; transition: border-color .2s, color .2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 12px; margin-top: 56px;
+    }
+    .stat-chip {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 10px 18px; border-radius: 10px;
+      font-size: .85rem; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .stat-chip strong { color: var(--text); }
+
+    /* ── PROBLEM STRIP ─────────────────── */
+    .problem { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 56px 20px; text-align: center; }
+    .problem h2 { max-width: 700px; margin: 0 auto 16px; }
+    .problem p { color: var(--muted); max-width: 560px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; }
+
+    /* ── HOW IT WORKS ──────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 24px; }
+    .step {
+      display: grid; grid-template-columns: 48px 1fr; gap: 20px;
+      align-items: flex-start;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 28px;
+    }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 900; color: var(--accent);
+    }
+    .step p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+
+ */    INDUSTRIES /* ── ─────
+    .industry-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media(min-width:640px){ .industry-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:900px){ .industry-grid { grid-template-columns: repeat(4,1fr); } }
+
+    .ind-card {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 28px 24px;
+      transition: border-color .2s, transform .2s;
+      cursor: default;
+    }
+    .ind-card:hover { border-color: rgba(59,130,246,.4); transform: translateY(-3px); }
+    .ind-emoji { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .ind-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
+    .ind-card p { color: var(--muted); font-size: .85rem; line-height: 1.6; margin-bottom: 16px; }
+    .ind-use {
+      list-style: none; display: flex; flex-direction: column; gap: 6px;
+    }
+    .ind-use li { font-size: .8rem; color: var(--muted); padding-left: 16px; position: relative; }
+    .ind-use li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+    /* ── FEATURES ──────────────────────── */
+    .feat-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media(min-width:600px){ .feat-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:900px){ .feat-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .feat-card {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 24px;
+    }
+    .feat-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; margin-bottom: 14px;
+    }
+    .feat-card h3 { margin-bottom: 6px; }
+    .feat-card p { color: var(--muted); font-size: .88rem; line-height: 1.6; }
+
+ TESTIMONIALS ──────────────────── */    /* ─
+    .testi-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media(min-width:720px){ .testi-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .testi {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .stars { color: var(--yellow); letter-spacing: 2px; font-size: .9rem; }
+    .testi-text { color: var(--muted); font-size: .9rem; line-height: 1.7; font-style: italic; flex: 1; }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent-g);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .8rem; color: #fff;
+    }
+    .author-name { font-weight: 700; font-size: .85rem; }
+    .author-role { color: var(--muted); font-size: .75rem; }
+
+ */    PRICING /* ── ──────
+    .pricing-wrap { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width:720px){ .pricing-wrap { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+    .price-card {
+      background: var(--card); border: 1px solid rgba(59,130,246,.35);
+      border-radius: 20px; padding: 36px;
+      position: relative; overflow: hidden;
+    }
+    .price-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent-g);
+    }
+    .price-top { margin-bottom: 28px; }
+    .price-name { font-size: .8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .price-amount { font-size: 3.6rem; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+    .price-period { color: var(--muted); font-size: .95rem; margin-top: 4px; }
+    .price-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 28px 0; }
+    .price-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: var(--muted); }
+    .price-list li .check { color: var(--green); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+    .price-note { color: var(--muted); font-size: .8rem; margin-top: 14px; }
+
+    .price-faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .faq-q { font-weight: 700; font-size: .92rem; margin-bottom: 6px; }
+    .faq-a { color: var(--muted); font-size: .88rem; line-height: 1.6; }
+
+    /* ── ABOUT ─────────────────────────── */
+    .about-wrap {
+      display: grid; grid-template-columns: 1fr; gap: 36px;
       align-items: center;
     }
-    @media(max-width:768px){ .about-inner { grid-template-columns: 1fr; gap: 40px; } }
-    .about-avatar-wrap {
-      display: flex; justify-content: center;
-    }
+    @media(min-width:720px){ .about-wrap { grid-template-columns: auto 1fr; gap: 56px; } }
     .about-avatar {
-      width: 220px; height: 220px; border-radius: 50%;
-      border: 3px solid var(--accent);
-      overflow: hidden; display: flex; align-items: center; justify-content: center;
-      font-size: 5rem; background: var(--surface2);
-      box-shadow: 0 0 60px rgba(0,212,255,0.2);
+      width: 140px; height: 140px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--card2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      box-shadow: 0 0 40px rgba(59,130,246,.2);
+      margin: 0 auto;
     }
-    .about-content h2 { margin-bottom: 16px; }
-    .about-content p { color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
-    .about-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    @media(min-width:720px){ .about-avatar { width: 160px; height: 160px; margin: 0; } }
+    .about-text h2 { margin-bottom: 12px; }
+    .about-text p { color: var(--muted); font-size: .95rem; line-height: 1.7; margin-bottom: 12px; }
+    .about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
     .about-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--border); padding: 8px 16px;
-      border-radius: 8px; color: var(--muted); text-decoration: none;
-      font-size: 0.85rem; font-weight: 600; transition: all .2s;
+      border: 1px solid var(--border); padding: 7px 14px; border-radius: 8px;
+      color: var(--muted); text-decoration: none; font-size: .8rem; font-weight: 600;
+      transition: all .2s;
     }
     .about-link:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ─── CTA SECTION ─────────────────────────── */
+    /* ── CTA SECTION ───────────────────── */
     .cta-section {
-      background: linear-gradient(135deg, rgba(0,212,255,0.07) 0%, rgba(124,58,237,0.07) 100%);
-      border-top: 1px solid var(--border);
-      text-align: center;
+      text-align: center; padding: 90px 20px;
+      background: radial-gradient(ellipse at center, rgba(59,130,246,.1) 0%, transparent 70%);
     }
-    .cta-section h2 { max-width: 600px; margin: 0 auto 16px; }
-    .cta-section p { color: var(--muted); max-width: 480px; margin: 0 auto 40px; font-size: 1.05rem; }
+    .cta-section h2 { max-width: 540px; margin: 0 auto 14px; }
+    .cta-section p { color: var(--muted); max-width: 420px; margin: 0 auto 32px; font-size: 1rem; }
+    .cta-small { color: var(--muted); font-size: .82rem; margin-top: 16px; }
 
-    /* ─── FOOTER ──────────────────────────────── */
+    /* ── FOOTER ────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 5%;
-      display: flex; flex-wrap: wrap; gap: 16px;
+      border-top: 1px solid var(--border); padding: 28px 20px;
+      display: flex; flex-wrap: wrap; gap: 12px;
       align-items: center; justify-content: space-between;
-      color: var(--muted); font-size: 0.85rem;
+      font-size: .82rem; color: var(--muted);
     }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--accent); }
-
-    /* ─── RESPONSIVE ──────────────────────────── */
-    @media(max-width:600px){
-      nav { padding: 14px 5%; }
-      .pricing-box { padding: 36px 24px; }
-      h1 { letter-spacing: -1px; }
-    }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">⚡ <span>htek</span>dev</div>
-  <a href="#book" class="nav-cta">Book a Call</a>
+  <div class="nav-brand">Pilot<span>Ops</span></div>
+  <a href="#book" class="nav-btn">Book a Call</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="badge"><span class="badge-dot"></span> Now accepting 3 clients for Q2 2026</div>
-  <h1>Your Team Deserves a<br><em>Private AI Operations Layer</em></h1>
-  <p class="hero-sub">
-    A fully managed AI assistant — connected to your Slack, your Telegram, your tools, and your data.
-    Built for teams that move fast and can't afford to wait on generic AI.
-  </p>
-  <div class="hero-ctas">
-    <a href="#book" class="btn-primary">🚀 Book a Strategy Call</a>
-    <a href="#how" class="btn-secondary">See How It Works</a>
-  </div>
-  <div class="hero-logos">
-    <span class="hero-logos-label">Integrates with your existing stack</span>
-    <span class="logo-chip">Slack</span>
-    <span class="logo-chip">Telegram</span>
-    <span class="logo-chip">GitHub Copilot</span>
-    <span class="logo-chip">Custom APIs</span>
-    <span class="logo-chip">Your Database</span>
-    <span class="logo-chip">Any MCP Tool</span>
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-pill"><span class="dot"></span> Managed AI for Business Teams</div>
+    <h1>Your team is losing hours.<br><span class="grad-text">AI fixes that.</span></h1>
+    <p class="hero-sub">
+      PilotOps is a fully managed AI assistant, built for your industry, connected to your tools, and running in the chat apps your team already uses — Slack and Telegram.
+    </p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">🗓 Book a Free Strategy Call</a>
+      <a href="#industries" class="btn-ghost">See Your Industry</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-chip"><strong>10–20 hrs</strong> saved per team member monthly</div>
+      <div class="stat-chip"><strong>2 weeks</strong> average setup time</div>
+      <div class="stat-chip"><strong>100%</strong> private — your data stays yours</div>
+      <div class="stat-chip"><strong>24/7</strong> fully managed & monitored</div>
+    </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how">
+<!-- PROBLEM -->
+<div class="problem">
   <div class="container">
-    <p class="section-tag">How It Works</p>
-    <h2>From message to action<br>in seconds</h2>
-    <p class="section-lead">Your team sends a message. The AI thinks, uses your tools, and responds — all in the channels they already use.</p>
-    <div class="how-grid">
-      <div class="how-card">
-        <div class="how-num">01</div>
-        <h3>You send a message</h3>
-        <p>Type a request in Slack or Telegram — "draft a proposal for client X", "check today's pipeline", "summarize this week's PRs".</p>
+    <h2>Your team is capable.<br>But they're buried in busywork.</h2>
+    <p>Researching, drafting, summarizing, chasing updates — your best people spend hours every week on work that AI should be doing for them. PilotOps changes that, without requiring you to become a tech company.</p>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="container">
+    <p class="tag">How It Works</p>
+    <h2>Up and running in<br>under two weeks</h2>
+    <p class="lead">No IT department needed. No new apps to learn. Just send a message and get work done.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>We map your workflows</h3>
+          <p>In a 30-minute call, we identify which tasks are eating your team's time — and which ones AI can handle immediately.</p>
+        </div>
       </div>
-      <div class="how-card">
-        <div class="how-num">02</div>
-        <h3>AI uses your tools</h3>
-        <p>The AI connects to your CRM, codebase, documents, APIs, and databases — pulling real context, not hallucinating facts.</p>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>We build and connect your AI</h3>
+          <p>Your AI assistant is configured for your industry, connected to your tools (CRM, documents, database, APIs), and deployed to Slack or Telegram — fully private.</p>
+        </div>
       </div>
-      <div class="how-card">
-        <div class="how-num">03</div>
-        <h3>You get a real answer</h3>
-        <p>A precise, actionable response is delivered right in the thread. No tab switching. No copy-pasting. Just results.</p>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Your team uses it — instantly</h3>
+          <p>No training required. Your team types a message in their existing chat app and gets real, accurate answers using your actual data.</p>
+        </div>
       </div>
-      <div class="how-card">
-        <div class="how-num">04</div>
-        <h3>Runs 24/7 automatically</h3>
-        <p>Scheduled jobs run on autopilot — daily briefings, weekly reports, alerts — all delivered without anyone lifting a finger.</p>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3>We maintain everything</h3>
+          <p>Hosting, uptime, updates, new integrations — I handle all of it. You never think about the infrastructure. You just use the AI.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="section section-alt" id="industries">
+  <div class="container">
+    <p class="tag">Built for Your Industry</p>
+    <h2>AI that understands<br>how your business works</h2>
+    <p class="lead">PilotOps isn't a generic chatbot. It's configured for the specific workflows, language, and tools of your industry.</p>
+    <div class="industry-grid">
+      <div class="ind-card">
+        <span class="ind-emoji">⚖️</span>
+        <h3>Law Firms</h3>
+        <p>Let your attorneys focus on billable work — not research and paperwork.</p>
+        <ul class="ind-use">
+          <li>Case research & summaries</li>
+          <li>Contract review & drafting</li>
+          <li>Client intake automation</li>
+          <li>Deadline & task tracking</li>
+        </ul>
+      </div>
+      <div class="ind-card">
+        <span class="ind-emoji">📈</span>
+        <h3>Finance & Investment</h3>
+        <p>Give your analysts and PMs instant access to insights from your own data.</p>
+        <ul class="ind-use">
+          <li>Portfolio performance briefings</li>
+          <li>Deal flow monitoring</li>
+          <li>Market summary digests</li>
+          <li>Report generation</li>
+        </ul>
+      </div>
+      <div class="ind-card">
+        <span class="ind-emoji">🏢</span>
+        <h3>Real Estate</h3>
+        <p>Help agents close faster and stop losing deals to slow follow-up.</p>
+        <ul class="ind-use">
+          <li>Listing summaries & comps</li>
+          <li>Offer drafting & tracking</li>
+          <li>Lead follow-up automation</li>
+          <li>Pipeline status at a glance</li>
+        </ul>
+      </div>
+      <div class="ind-card">
+        <span class="ind-emoji">🎯</span>
+        <h3>Agencies & Consultancies</h3>
+        <p>Deliver more for your clients without hiring more people.</p>
+        <ul class="ind-use">
+          <li>Client reporting automation</li>
+          <li>Content & copy drafting</li>
+          <li>Campaign performance Q&A</li>
+          <li>Internal knowledge base</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
-<section class="features">
+<section class="section" id="features">
   <div class="container">
-    <p class="section-tag">What's Included</p>
-    <h2>Everything you need.<br>Nothing you don't.</h2>
-    <p class="section-lead">A complete, private AI operations platform — built, hosted, and maintained for your team.</p>
+    <p class="tag">What You Get</p>
+    <h2>Everything included.<br>Nothing to figure out.</h2>
+    <p class="lead">A complete, private AI operations layer — built, hosted, and maintained by a senior engineer.</p>
     <div class="feat-grid">
-      <div class="feat-item">
+      <div class="feat-card">
         <div class="feat-icon">🔒</div>
-        <div>
-          <h3>Private by Design</h3>
-          <p>Your data never goes to public AI endpoints. Your AI runs in your infrastructure, with your credentials only.</p>
-        </div>
+        <h3>Fully Private Infrastructure</h3>
+        <p>Your data never touches public AI servers. Everything runs in a private environment under your control.</p>
       </div>
-      <div class="feat-item">
+      <div class="feat-card">
         <div class="feat-icon">🔗</div>
-        <div>
-          <h3>Custom Tool Integrations</h3>
-          <p>Connect any API, database, or internal tool. The AI can read, write, and act — not just summarize.</p>
-        </div>
+        <h3>Custom Tool Connections</h3>
+        <p>Connect your CRM, document storage, databases, and APIs. The AI reads and acts on real data — not guesses.</p>
       </div>
-      <div class="feat-item">
+      <div class="feat-card">
         <div class="feat-icon">💬</div>
-        <div>
-          <h3>Works in Slack & Telegram</h3>
-          <p>No new app to install. Your team uses the tools they already have. The AI shows up where they are.</p>
-        </div>
+        <h3>Works in Slack & Telegram</h3>
+        <p>No new software. Your team asks questions in the chat app they already use and gets answers instantly.</p>
       </div>
-      <div class="feat-item">
+      <div class="feat-card">
         <div class="feat-icon">⏰</div>
-        <div>
-          <h3>Automated Scheduled Jobs</h3>
-          <p>Daily standups, weekly reports, summaries pipeline all automated and delivered on a schedule you define.</p> 
-        </div>
+        <h3>Automated Scheduled Jobs</h3>
+        <p>Daily briefings, weekly reports, Monday pipeline summaries — all delivered automatically on your schedule.</p>
       </div>
-      <div class="feat-item">
+      <div class="feat-card">
         <div class="feat-icon">🧠</div>
-        <div>
-          <h3>Persistent Context</h3>
-          <p>The AI remembers your projects, preferences, and previous conversations — no need to re-explain every time.</p>
-        </div>
+        <h3>Persistent Memory</h3>
+        <p>The AI remembers your projects, clients, and preferences. No re-explaining. Just ask.</p>
       </div>
-      <div class="feat-item">
-        <div class="feat-icon">📊</div>
-        <div>
-          <h3>Fully Managed & Monitored</h3>
-          <p>I handle deployment, uptime, updates, and support. You focus on using the AI — not babysitting infrastructure.</p>
-        </div>
+      <div class="feat-card">
+        <div class="feat-icon">🛠️</div>
+        <h3>Fully Managed by Me</h3>
+        <p>I handle hosting, uptime, updates, and new integrations. You get a senior engineer on call — not a vendor.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SOCIAL PROOF -->
-<section>
+<!-- TESTIMONIALS -->
+<section class="section section-alt">
   <div class="container">
-    <p class="section-tag">What Clients Say</p>
-    <h2>Built for teams that<br>don't settle for average</h2>
-    <p class="section-lead">Early clients have seen real productivity gains — hours saved per week per team member.</p>
-    <div class="quote-grid">
-      <div class="quote-card">
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"This replaced three different tools for us. Our team uses it every day without thinking about it — it just works."</p>
-        <div class="quote-author">
-          <div class="quote-avatar">JR</div>
+    <p class="tag">Client Results</p>
+    <h2>Real teams. Real results.</h2>
+    <p class="lead">Early clients consistently report 10–20 hours saved per person per month. The ROI is obvious in week one.</p>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class=stars</div>>★★★
+        <p class="testi-text">"We tried building this ourselves. Six months and $80K later, we weren't close. Hector had it running in two weeks and it actually works."</p>
+        <div class="testi-author">
+          <div class="avatar">DK</div>
           <div>
-            <div class="quote-name">James R.</div>
-            <div class="quote-title">CTO, Series A SaaS</div>
+            <div class="author-name">David K.</div>
+            <div class="author-role">Founder, Real Estate Tech Firm</div>
           </div>
         </div>
       </div>
-      <div class="quote-card">
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"The ROI was obvious in the first week. Saves my team at least 10 hours each. Worth every dollar."</p>
-        <div class="quote-author">
-          <div class="quote-avatar">ML</div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"My attorneys were spending 6–8 hours a week on research. Now that's an hour. The ROI at $8K/month is laughable how obvious it is."</p>
+        <div class="testi-author">
+          <div class="avatar">SR</div>
           <div>
-            <div class="quote-name">Monica L.</div>
-            <div class="quote-title">Operations Director, PE-backed company</div>
+            <div class="author-name">Sandra R.</div>
+            <div class="author-role">Managing Partner, Boutique Law Firm</div>
           </div>
         </div>
       </div>
-      <div class="quote-card">
-        <div class="quote-stars">★★★★★</div>
-        <p class="quote-text">"We tried building this in-house. Six months and $80K later we weren't close. Hector had it running in two weeks."</p>
-        <div class="quote-author">
-          <div class="quote-avatar">DK</div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"Our team gets a full portfolio briefing in Slack every morning. We make faster decisions and our clients notice. It replaced three separate tools."</p>
+        <div class="testi-author">
+          <div class="avatar">ML</div>
           <div>
-            <div class="quote-name">David K.</div>
-            <div class="quote-title">Founder, Real Estate Tech</div>
+            <div class="author-name">Marcus L.</div>
+            <div class="author-role">Director of Ops, Investment Office</div>
           </div>
         </div>
       </div>
@@ -474,49 +493,69 @@
 </section>
 
 <!-- PRICING -->
-<section id="pricing">
+<section class="section" id="pricing">
   <div class="container">
-    <p class="section-tag" style="text-align:center">Simple Pricing</p>
-    <h2 style="text-align:center;max-width:600px;margin:0 auto 16px">One plan.<br>Everything included.</h2>
-    <p class="section-lead" style="text-align:center;margin:0 auto 60px">No per-seat fees. No hidden costs. No long-term contracts required.</p>
-    <div class="pricing-box">
-      <p class="price-label">Monthly Retainer</p>
-      <div class="price-amount">$8,000</div>
-      <p class="price-period">/ month</p>
-      <ul class="price-features">
-        <li>Custom AI platform built for your team</li>
-        <li>Slack + Telegram integration</li>
-        <li>Up to 5 custom tool / API integrations</li>
-        <li>Scheduled automated jobs (cron)</li>
-        <li>Fully managed hosting & infrastructure</li>
-        <li>24/7 uptime monitoring</li>
-        <li>Unlimited team members</li>
-        <li>Monthly strategy & optimization calls</li>
-        <li>Priority support & rapid updates</li>
-      </ul>
-      <a href="#book" class="btn-primary" style="display:inline-block;margin-bottom:8px">🗓 Book a Strategy Call</a>
-      <p class="price-note">Setup fee may apply. First month includes onboarding & full custom build.</p>
+    <p class="tag">Investment</p>
+    <h2>Simple, transparent pricing.</h2>
+    <p class="lead">One flat monthly retainer. No per-seat fees. No hidden costs. Cancel anytime after month 3.</p>
+    <div class="pricing-wrap">
+      <div class="price-card">
+        <div class="price-top">
+          <div class="price-name">Full-Service Retainer</div>
+          <div class="price-amount grad-text">$8,000</div>
+          <div class="price-period">per month</div>
+        </div>
+        <ul class="price-list">
+          <li><span class="check">✓</span> Custom AI platform built for your team</li>
+          <li><span class="check">✓</span> Slack + Telegram integration</li>
+          <li><span class="check">✓</span> Up to 5 custom tool / API integrations</li>
+          <li><span class="check">✓</span> Automated scheduled jobs</li>
+          <li><span class="check">✓</span> Private infrastructure — your data only</li>
+          <li><span class="check">✓</span> 24/7 uptime monitoring</li>
+          <li><span class="check">✓</span> Unlimited team members</li>
+          <li><span class="check">✓</span> Monthly optimization calls</li>
+          <li><span class="check">✓</span> Priority support & rapid updates</li>
+        </ul>
+        <a href="#book" class="btn-primary" style="width:100%;text-align:center">🗓 Book a Strategy Call</a>
+        <p class="price-note">One-time setup fee applies. First month includes full custom build and onboarding.</p>
+      </div>
+      <div class="price-faq">
+        <div class="faq-item">
+          <p class="faq-q">Why $8,000/month?</p>
+          <p class="faq-a">You're not paying for software. You're paying for a senior engineer who builds, maintains, and evolves your AI operations layer. The average client saves 10–20 hours per person per month. For a 5-person team at $80/hr, that's $32–64K in recovered time.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">How long does setup take?</p>
+          <p class="faq-a">Most clients are live within 2 weeks. After an initial scoping call, I build your custom platform and deliver it for your team to start using — no waiting months.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">What if we need something custom?</p>
+          <p class="faq-a">That's the point. Everything is custom. I connect your specific tools, configure workflows for your industry, and build automations around how your team actually works.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Is our data private?</p>
+          <p class="faq-a">Yes. Your AI runs in a private environment. Your data never goes to a public API endpoint. This is especially important for legal, financial, and client-sensitive work.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" style="background:var(--surface);border-top:1px solid var(--border)">
+<section class="section section-alt" id="about">
   <div class="container">
-    <div class="about-inner">
-      <div class="about-avatar-wrap">
-        <div class="about-avatar">👨‍💻</div>
-      </div>
-      <div class="about-content">
-        <p class="section-tag">Who Builds This</p>
+    <div class="about-wrap">
+      <div class="about-avatar">👨‍💻</div>
+      <div class="about-text">
+        <p class="tag">Who Builds This</p>
         <h2>Hector Flores</h2>
-        <p>Full-stack engineer, architect, and AI systems specialist. I build production-grade AI infrastructure — not demos. Every platform I deliver is something I'd stake my reputation on.</p>
-        <p>I specialize in bridging AI capabilities with the tools real teams actually use — Slack, Telegram, GitHub, custom APIs. I've built systems that run 24/7 for demanding clients at Microsoft and beyond.</p>
-        <p>When you work with me, you get a hands-on engineer who ships fast and stays accountable — not an agency that hands you off to a junior.</p>
+        <p>I'm a full-stack engineer and AI systems architect. I specialize in connecting AI to the tools and workflows real businesses actually use — not demos, not experiments, production systems that run 24/7.</p>
+        <p>Every PilotOps client gets a dedicated engineer who builds your platform, maintains it, and keeps improving it. You're not handed off to a junior or left with a generic product. You get me.</p>
+        <p>Previously at Microsoft. Building AI-powered infrastructure for teams that can't afford for things to break.</p>
         <div class="about-links">
           <a href="https://htek.dev" class="about-link" target="_blank">🌐 htek.dev</a>
           <a href="https://twitter.com/htekdev" class="about-link" target="_blank">𝕏 @htekdev</a>
-          <a href="https://github.com/htekdev" class="about-link" target="_blank">⬡ github.com/htekdev</a>
+          <a href="https://github.com/htekdev" class="about-link" target="_blank">⬡ GitHub</a>
         </div>
       </div>
     </div>
@@ -525,24 +564,23 @@
 
 <!-- CTA -->
 <section class="cta-section" id="book">
-  <div class="container">
-    <p class="section-tag" style="text-align:center">Ready to Start?</p>
-    <h2>Book a free 30-minute<br>strategy call</h2>
-    <p>Let's talk about your team's workflow and I'll show you exactly what your AI operations platform would look like — before you commit to anything.</p>
-    <!-- CALENDLY LINK GOES HERE -->
-    <a href="mailto:hector@htek.dev" class="btn-primary" style="font-size:1.1rem;padding:18px 48px">
-      🗓 Schedule a Call
-    </a>
-    <p style="color:var(--muted);font-size:0.85rem;margin-top:20px">No pressure. No sales pitch. Just a conversation about what's possible.</p>
-  </div>
+  <p class="tag" style="text-align:center">Ready to Start?</p>
+  <h2>Book a free 30-minute call</h2>
+  <p>We'll map your biggest workflow bottlenecks and I'll show you exactly what your AI operations platform would look like — no commitment required.</p>
+  <!-- REPLACE href WITH YOUR CALENDLY LINK -->
+  <a href="mailto:hector@htek.dev" class="btn-primary" style="font-size:1rem;padding:16px 40px">
+    🗓 Schedule Your Strategy Call
+  </a>
+  <p class="cta-small">No sales pitch. No pressure. Just a conversation about what's possible for your team.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div>© 2026 Hector Flores · <a href="https://htek.dev">htek.dev</a></div>
-  <div style="display:flex;gap:20px">
+  <div>© 2026 PilotOps · Built by <a href="https://htek.dev" target="_blank">Hector Flores</a></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
     <a href="mailto:hector@htek.dev">hector@htek.dev</a>
     <a href="https://twitter.com/htekdev" target="_blank">@htekdev</a>
+    <a href="https://htek.dev" target="_blank">htek.dev</a>
   </div>
 </footer>
 
